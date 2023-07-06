@@ -7,6 +7,7 @@ The toolbar is disabled by default, and auto-save is set to one keystroke. It is
 Completion :
 
 Tab ---- choose completion
+
 Enter ---- new line
 
 
