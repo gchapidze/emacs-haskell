@@ -8,6 +8,14 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+(use-package emacs
+  :config
+  ;; Set Consolas as the default font
+  (set-frame-font "Consolas")
+  
+  ;; Set font size to 12 points
+  (set-face-attribute 'default nil :height 130))
+
 ;; Install and configure dracula theme
 (use-package dracula-theme
   :ensure t
@@ -65,9 +73,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(treemacs-directory-face ((t (:height 1.15))))
- '(treemacs-file-face ((t (:height 1.05))))
- '(treemacs-root-face ((t (:height 1.15)))))
+ '(treemacs-directory-face ((t (:height 1.00))))
+ '(treemacs-file-face ((t (:height 0.90))))
+ '(treemacs-root-face ((t (:height 1.00)))))
 
 ;; Install and configure company-mode
 (use-package company
@@ -76,9 +84,6 @@
 
 ;; Disable the tool bar
 (tool-bar-mode -1)
-
-;; Set the default font size
-(set-face-attribute 'default nil :height 120)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -89,3 +94,4 @@
  '(package-selected-packages
    '(company use-package treemacs-all-the-icons lsp-ui lsp-haskell flycheck dracula-theme))
  '(tool-bar-mode nil))
+
