@@ -67,6 +67,9 @@
 ;; Set the default font size
 (set-face-attribute 'default nil :height 120)
 
+;; Bind treemacs show/hide to C-M-s
+(global-set-key (kbd "C-M-s") 'treemacs)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
