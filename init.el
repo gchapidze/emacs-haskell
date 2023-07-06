@@ -13,7 +13,7 @@
   ;; Set Consolas as the default font
   (set-frame-font "Consolas")
   
-  ;; Set font size to 12 points
+  ;; Set font size to 13 points
   (set-face-attribute 'default nil :height 130))
 
 ;; Install and configure dracula theme
