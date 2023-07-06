@@ -4,6 +4,6 @@ The toolbar is disabled by default, and auto-save is set to one keystroke. It is
 
 Keybindings:
 
-C-M-x       start a repl
+C-M-x   ----    start a repl
 
-C-c C-c     compile 
+C-c C-c  ----   compile 
