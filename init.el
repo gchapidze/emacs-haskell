@@ -8,12 +8,13 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+;; Emacs configuration
 (use-package emacs
   :config
   ;; Set Consolas as the default font
   (set-frame-font "Consolas")
   
-  ;; Set font size to 13 points
+  ;; Set font size to 12 points
   (set-face-attribute 'default nil :height 130))
 
 ;; Install and configure dracula theme
@@ -80,7 +81,12 @@
 ;; Install and configure company-mode
 (use-package company
   :ensure t
-  :hook (prog-mode . company-mode))
+  :hook (prog-mode . company-mode)
+  :config
+  (define-key company-active-map (kbd "<return>") nil)
+  (define-key company-active-map (kbd "RET") nil)
+  (define-key company-active-map (kbd "<tab>") #'company-complete-selection)
+  (define-key company-active-map (kbd "TAB") #'company-complete-selection))
 
 ;; Disable the tool bar
 (tool-bar-mode -1)
@@ -94,4 +100,3 @@
  '(package-selected-packages
    '(company use-package treemacs-all-the-icons lsp-ui lsp-haskell flycheck dracula-theme))
  '(tool-bar-mode nil))
-
