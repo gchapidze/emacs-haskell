@@ -1,7 +1,9 @@
+;; Initialize package management
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
+;; Ensure 'use-package' is installed
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
@@ -11,6 +13,14 @@
   :ensure t
   :config
   (load-theme 'dracula t))
+
+;; Install and configure doom-modeline
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1))
+
+;; Disable async compilation warnings
+(setq comp-async-warnings nil)
 
 ;; Enable haskell-mode and configure keybindings
 (use-package haskell-mode
@@ -46,6 +56,9 @@
   :config
   (treemacs))
 
+;; Bind treemacs show/hide to C-M-s
+(global-set-key (kbd "C-M-s") 'treemacs)
+
 ;; Set the font size for treemacs
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -67,9 +80,6 @@
 ;; Set the default font size
 (set-face-attribute 'default nil :height 120)
 
-;; Bind treemacs show/hide to C-M-s
-(global-set-key (kbd "C-M-s") 'treemacs)
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -79,4 +89,3 @@
  '(package-selected-packages
    '(company use-package treemacs-all-the-icons lsp-ui lsp-haskell flycheck dracula-theme))
  '(tool-bar-mode nil))
-
