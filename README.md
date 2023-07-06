@@ -2,7 +2,7 @@
 Haskell in Emacs with self-contained configuration using HLint and HLS, including documentation on hover and auto-completion. 
 The toolbar is disabled by default, and auto-save is set to one keystroke. It is simple to alter Treemacs' font size.
 
-file:///home/gc/Downloads/Screenshot%20from%202023-07-06%2011-38-39.png
+![Screenshot from 2023-07-06 11-38-23](https://github.com/gchapidze/emacs-haskell/assets/118893979/5fc298de-8782-4cb8-a57e-0567d83c5f29)
 
 
 Keybindings:
