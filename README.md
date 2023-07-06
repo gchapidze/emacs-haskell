@@ -10,3 +10,6 @@ Keybindings:
 C-M-x   ----    start a repl
 
 C-c C-c  ----   compile 
+
+![Screenshot from 2023-07-06 11-38-39](https://github.com/gchapidze/emacs-haskell/assets/118893979/cd338c22-abc2-4d9c-ad49-675898141ce7)
+
