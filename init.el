@@ -20,7 +20,7 @@
                 (lambda ()
                   (interactive)
                   ;; Save all buffers and kill Emacs
-                  (save-buffers-kill-emacs t)))
+                  (save-buffers-kill-emacs 1)))
 
 (eval-after-load "frame"
   '(progn
