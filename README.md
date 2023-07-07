@@ -1,16 +1,29 @@
 # emacs-haskell
-Haskell in Emacs with self-contained configuration using HLint and HLS, including documentation on hover and auto-completion. 
-The toolbar is disabled by default, and auto-save is set to one keystroke. It is simple to alter Treemacs' font size.
+# Haskell in Emacs with self-contained configuration
 
-![Screenshot from 2023-07-06 11-38-23](https://github.com/gchapidze/emacs-haskell/assets/118893979/5fc298de-8782-4cb8-a57e-0567d83c5f29)
+This setup provides a convenient development environment for Haskell in Emacs. It includes features such as HLint integration, Haskell Language Server (HLS) for documentation on hover and auto-completion, and a customized interface.
 
-Completion : <br />
-Tab ---- choose completion <br />
-Enter ---- newline<br /><br />
-Key bindings:<br />
-C-M-x   ----    start a repl (GHCi)<br />
-C-c C-c  ----   compile (cabal)<br />
-C-M-s   ----    show/hide (treemacs)<br />
+## Features
 
-![Screenshot from 2023-07-06 11-38-39](https://github.com/gchapidze/emacs-haskell/assets/118893979/cd338c22-abc2-4d9c-ad49-675898141ce7)
+- **HLint**: Integration with HLint for suggesting improvements to Haskell code.
+- **Haskell Language Server (HLS)**: Advanced editor features including documentation on hover and auto-completion.
+- **Toolbar**: Disabled by default for a cleaner interface.
+- **Auto-save**: Set to one keystroke for faster workflow.
+- **Treemacs**: Easy adjustment of font size.
 
+## Screenshots
+
+![Screenshot 1](https://github.com/gchapidze/emacs-haskell/assets/118893979/5fc298de-8782-4cb8-a57e-0567d83c5f29)
+
+### Completion
+
+- Tab: Select completion
+- Enter: Newline
+
+### Key Bindings
+
+- C-M-x: Start a REPL (GHCi)
+- C-c C-c: Compile (cabal)
+- C-M-s: Show/hide Treemacs
+
+![Screenshot 2](https://github.com/gchapidze/emacs-haskell/assets/118893979/cd338c22-abc2-4d9c-ad49-675898141ce7)
