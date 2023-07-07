@@ -9,6 +9,7 @@ This setup provides a convenient development environment for Haskell in Emacs. I
 - **Toolbar**: Disabled by default for a cleaner interface.
 - **Auto-save**: Set to one keystroke for faster workflow.
 - **Treemacs**: Easy adjustment of font size.
+- **Doom Modeline**: A stylish and informative mode line for Emacs.
 
 ### Completion
 
