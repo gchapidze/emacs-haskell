@@ -8,19 +8,43 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-;; Set font and font size
-(use-package emacs
-  :config
-  (set-frame-font "Consolas") ;; Set Consolas as the default font
-  (set-face-attribute 'default nil :height 130) ;; Set font size to 12 points
-  )
-
 ;; Install and configure dracula theme
 (use-package dracula-theme
   :ensure t
   :config
   (load-theme 'dracula t)
   )
+
+;; Bind the function to the key sequence "<S-f1>"
+(global-set-key (kbd "<S-f1>")
+                (lambda ()
+                  (interactive)
+                  ;; Save all buffers and kill Emacs
+                  (save-buffers-kill-emacs t)))
+
+(eval-after-load "frame"
+  '(progn
+     ;; This code is evaluated after the "frame" library is loaded
+     ;; It ensures that the key binding is set only after the "frame" library is available
+     
+     ;; Bind Shift + F12 to toggle maximization
+     (global-set-key (kbd "<S-f12>") 'toggle-frame-maximized)
+     ;; This line sets the key binding for Shift + F12
+     ;; which toggles the maximization state of the frame
+     ))
+
+(setq default-frame-alist '((undecorated . t)))
+;; Set the default frame parameters to make it undecorated (without window decorations)
+
+(add-to-list 'default-frame-alist '(drag-internal-border . 1))
+;; Add 'drag-internal-border' parameter to the default frame alist
+;; This parameter sets the width (in pixels) of the internal border to 1
+;; The internal border is the space between the frame content and the window edges
+
+(add-to-list 'default-frame-alist '(internal-border-width . 5))
+;; Add 'internal-border-width' parameter to the default frame alist
+;; This parameter sets the width (in pixels) of the internal border to 5
+;; The internal border is the space between the frame content and the window edges
 
 ;; Install and configure doom-modeline
 (use-package doom-modeline
@@ -77,27 +101,6 @@
   :hook (lsp-mode . lsp-ui-mode)
   )
 
-;; Install and configure treemacs
-(use-package treemacs
-  :ensure t
-  :config
-  (treemacs)
-  )
-
-;; Bind treemacs show/hide to C-M-s
-(global-set-key (kbd "C-M-s") 'treemacs)
-
-;; Set the font size for treemacs
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(treemacs-directory-face ((t (:height 1.0))))
- '(treemacs-file-face ((t (:height 0.9))))
- '(treemacs-root-face ((t (:height 1.0))))
- )
-
 ;; Install and configure company-mode
 (use-package company
   :ensure t
@@ -131,13 +134,87 @@
 ;; Disable the tool bar
 (tool-bar-mode -1)
 
+(use-package all-the-icons
+  :ensure t)
+;; Use the 'use-package' macro to configure the 'all-the-icons' package
+;; The ':ensure t' ensures that the package is installed if not already present
+
+(use-package treemacs
+  :ensure t
+  :after all-the-icons
+  :config
+  (require 'treemacs-all-the-icons)
+  (treemacs-load-theme "all-the-icons")
+
+  ;; Customize the sizes for Treemacs faces
+  (custom-set-faces
+   '(treemacs-directory-face ((t (:height 0.9))))
+   '(treemacs-file-face ((t (:height 0.8))))
+   '(treemacs-root-face ((t (:height 0.9)))))
+  )
+
+(use-package treemacs-evil
+  :ensure t
+  :after treemacs evil)
+;; Use the 'use-package' macro to configure the 'treemacs-evil' package
+;; The ':ensure t' ensures that the package is installed if not already present
+;; The ':after treemacs evil' specifies that the package should be loaded after 'treemacs' and 'evil'
+
+(use-package treemacs-projectile
+  :ensure t
+  :after treemacs projectile)
+;; Use the 'use-package' macro to configure the 'treemacs-projectile' package
+;; The ':ensure t' ensures that the package is installed if not already present
+;; The ':after treemacs projectile' specifies that the package should be loaded after 'treemacs' and 'projectile'
+
+;; Display Treemacs as a side window on startup
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (delete-other-windows)
+            (treemacs)
+            (treemacs-follow-mode t)))
+
+;; Set C-M-s keybinding to toggle side window
+(global-set-key (kbd "C-M-s") 'window-toggle-side-windows)
+
+;; Dashboard
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook))
+
+(setq dashboard-startup-banner nil)
+(setq dashboard-banner-logo-title "
+            ▓▓▓▓      ▓▓              ▓▓      ▓▓▓▓          
+                ▓▓      ██▓▓████▓▓▓▓██      ▓▓              
+                ▓▓    ▓▓▓▓▓▓▓▓▓▓▒▒▓▓▓▓██    ▓▓              
+                  ██  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  ▓▓                
+                    ▓▓▓▓▓▓▒▒▒▒▓▓▒▒▒▒░░▒▒▓▓                  
+                  ▓▓▓▓▓▓▓▓▒▒▓▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒                
+                ██▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒▓▓              
+                ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒░░▒▒▓▓▓▓              
+              ▓▓▓▓▓▓▓▓▓▓▓▓▒▒▓▓▓▓▓▓▒▒▒▒░░▒▒▓▓▓▓▓▓            
+            ▓▓  ▓▓▓▓▓▓▓▓▓▓▒▒▒▒▓▓▒▒▒▒▓▓▒▒▒▒▒▒▓▓  ▓▓          
+            ▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓▒▒▓▓▒▒▓▓▓▓▒▒▓▓▒▒▒▒  ▓▓          
+        ▓▓▒▒    ▓▓▓▓▓▓▓▓▓▓▓▓▒▒▓▓▒▒▓▓▓▓▒▒▓▓▒▒▒▒    ▒▒▓▓      
+                ▓▓▓▓▓▓▓▓▓▓▒▒▒▒▓▓▒▒▒▒▓▓▒▒▒▒▒▒▒▒              
+                ▓▓▓▓▓▓▓▓▓▓▒▒▒▒▓▓▒▒▒▒▒▒░░▒▒▒▒▒▒              
+                ▓▓▓▓▓▓▓▓▓▓▒▒▒▒▓▓▒▒▒▒▒▒▒▒▒▒▒▒▒▒              
+              ██  ▓▓▓▓▓▓▓▓▓▓▒▒▓▓▒▒▓▓▓▓▒▒▒▒▒▒  ▓▓            
+              ▓▓    ▓▓▓▓▓▓▓▓▒▒▓▓▒▒▓▓▓▓▒▒▒▒    ▓▓            
+              ▓▓        ▓▓▒▒▒▒▓▓▒▒▒▒▒▒        ▓▓            
+                ▓▓                          ▓▓              
+                  ▓▓                      ▓▓                
+                  ▓▓                      ▓▓                
+")
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(auto-save-interval 1)
+ '(menu-bar-mode nil)
  '(package-selected-packages
    '(company use-package treemacs-all-the-icons lsp-ui lsp-haskell flycheck dracula-theme))
- '(tool-bar-mode nil)
- )
+ '(tool-bar-mode nil))
