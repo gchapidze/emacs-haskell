@@ -10,6 +10,7 @@ This setup provides a convenient development environment for Haskell in Emacs. I
 - **Auto-save**: Set to one keystroke for faster workflow.
 - **Treemacs**: Easy adjustment of font size.
 - **Doom Modeline**: A stylish and informative mode line for Emacs.
+- **Ormolu**: A formatter for Haskell source code.
 
 ### Completion
 
@@ -21,7 +22,7 @@ This setup provides a convenient development environment for Haskell in Emacs. I
 - C-M-x: Start a REPL (GHCi)
 - C-c C-c: Compile (cabal)
 - C-M-s: Show/hide Treemacs
-- 
+- C-f: format buffer (ormolu)
 ## Screenshots
 
 ![Screenshot 1](https://github.com/gchapidze/emacs-haskell/assets/118893979/5fc298de-8782-4cb8-a57e-0567d83c5f29)
