@@ -8,35 +8,50 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-;; Emacs configuration
+;; Set font and font size
 (use-package emacs
   :config
-  ;; Set Consolas as the default font
-  (set-frame-font "Consolas")
-  
-  ;; Set font size to 12 points
-  (set-face-attribute 'default nil :height 130))
+  (set-frame-font "Consolas") ;; Set Consolas as the default font
+  (set-face-attribute 'default nil :height 130) ;; Set font size to 12 points
+  )
 
 ;; Install and configure dracula theme
 (use-package dracula-theme
   :ensure t
   :config
-  (load-theme 'dracula t))
+  (load-theme 'dracula t)
+  )
 
 ;; Install and configure doom-modeline
 (use-package doom-modeline
   :ensure t
-  :init (doom-modeline-mode 1))
+  :init (doom-modeline-mode 1)
+  )
 
 ;; Disable async compilation warnings
 (setq comp-async-warnings nil)
 
-;; Enable haskell-mode and configure keybindings
+;; Haskell Mode configuration
 (use-package haskell-mode
-  :bind (("C-M-x" . haskell-interactive-bring))
+  :ensure t
+  :bind (("C-M-x" . haskell-interactive-bring) ;; Bind Haskell REPL to C-M-x
+         ("C-f" . ormolu-format-buffer)) ;; Bind formatting to C-f
   :config
   (define-key haskell-mode-map (kbd "C-c C-c") 'haskell-compile)
-  (define-key haskell-cabal-mode-map (kbd "C-c C-c") 'haskell-compile))
+  (define-key haskell-cabal-mode-map (kbd "C-c C-c") 'haskell-compile)
+  )
+
+;; Install and configure ormolu
+(use-package ormolu
+  :ensure t
+  )
+
+;; Hook to bind formatting to C-f in haskell-mode
+(add-hook 'haskell-mode-hook
+          (lambda ()
+            (local-set-key (kbd "C-f") 'ormolu-format-buffer)
+            )
+          )
 
 ;; Enable lsp-mode and configure for haskell-mode
 (use-package lsp-mode
@@ -46,24 +61,28 @@
   (setq lsp-haskell-process-path-hie "haskell-language-server-wrapper")
   (setq lsp-haskell-process-args-hie '("-d" "-l" "/tmp/hls.log"))
   (setq lsp-enable-snippet nil) ;; Disable snippet support
-  (setq lsp-auto-configure t))
+  (setq lsp-auto-configure t)
+  )
 
 ;; Install and configure lsp-haskell
 (use-package lsp-haskell
   :ensure t
   :config
-  (setq lsp-haskell-server-path "haskell-language-server-wrapper"))
+  (setq lsp-haskell-server-path "haskell-language-server-wrapper")
+  )
 
 ;; Enable lsp-ui for additional UI features
 (use-package lsp-ui
   :ensure t
-  :hook (lsp-mode . lsp-ui-mode))
+  :hook (lsp-mode . lsp-ui-mode)
+  )
 
 ;; Install and configure treemacs
 (use-package treemacs
   :ensure t
   :config
-  (treemacs))
+  (treemacs)
+  )
 
 ;; Bind treemacs show/hide to C-M-s
 (global-set-key (kbd "C-M-s") 'treemacs)
@@ -74,19 +93,40 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(treemacs-directory-face ((t (:height 1.00))))
- '(treemacs-file-face ((t (:height 0.90))))
- '(treemacs-root-face ((t (:height 1.00)))))
+ '(treemacs-directory-face ((t (:height 1.0))))
+ '(treemacs-file-face ((t (:height 0.9))))
+ '(treemacs-root-face ((t (:height 1.0))))
+ )
 
 ;; Install and configure company-mode
 (use-package company
   :ensure t
   :hook (prog-mode . company-mode)
   :config
+  (define-key company-active-map (kbd "<escape>") #'hide-company-tooltip)
   (define-key company-active-map (kbd "<return>") nil)
   (define-key company-active-map (kbd "RET") nil)
   (define-key company-active-map (kbd "<tab>") #'company-complete-selection)
-  (define-key company-active-map (kbd "TAB") #'company-complete-selection))
+  (define-key company-active-map (kbd "TAB") #'company-complete-selection)
+  )
+
+;; Function to hide company tooltip
+(defun hide-company-tooltip ()
+  (interactive)
+  (when (company-tooltip-visible-p)
+    (company-cancel))
+  )
+
+;; Function to disable beep sound
+(defun disable-beep-sound ()
+  (setq ring-bell-function 'ignore)
+  )
+
+;; Disable beep sound
+(add-hook 'after-init-hook 'disable-beep-sound)
+
+;; Disable pop-up errors in Haskell mode
+(setq haskell-interactive-popup-errors nil)
 
 ;; Disable the tool bar
 (tool-bar-mode -1)
@@ -99,4 +139,5 @@
  '(auto-save-interval 1)
  '(package-selected-packages
    '(company use-package treemacs-all-the-icons lsp-ui lsp-haskell flycheck dracula-theme))
- '(tool-bar-mode nil))
+ '(tool-bar-mode nil)
+ )
