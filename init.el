@@ -8,11 +8,21 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+;; Auto-save on change
+(defun save-buffer-if-visiting-file (&optional args)
+   "Save the current buffer only if it is visiting a file"
+   (interactive)
+   (if (and (buffer-file-name) (buffer-modified-p))
+       (save-buffer args)))
+
+(add-hook 'auto-save-hook 'save-buffer-if-visiting-file)
+(setq auto-save-interval 1)
+
 ;; Install and configure dracula theme
-(use-package dracula-theme
+(use-package leuven-theme
   :ensure t
   :config
-  (load-theme 'dracula t)
+  (load-theme 'leuven t)
   )
 
 ;; Bind the function to the key sequence "<S-f1>"
@@ -148,9 +158,9 @@
 
   ;; Customize the sizes for Treemacs faces
   (custom-set-faces
-   '(treemacs-directory-face ((t (:height 0.9))))
-   '(treemacs-file-face ((t (:height 0.8))))
-   '(treemacs-root-face ((t (:height 0.9)))))
+   '(treemacs-directory-face ((t (:height 0.85))))
+   '(treemacs-file-face ((t (:height 0.75))))
+   '(treemacs-root-face ((t (:height 0.85)))))
   )
 
 (use-package treemacs-evil
@@ -213,8 +223,16 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(auto-save-interval 1)
  '(menu-bar-mode nil)
  '(package-selected-packages
    '(company use-package treemacs-all-the-icons lsp-ui lsp-haskell flycheck dracula-theme))
- '(tool-bar-mode nil))
+ '(tool-bar-mode nil)
+ '(warning-suppress-types '((comp) (comp))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(treemacs-directory-face ((t (:height 0.85))))
+ '(treemacs-file-face ((t (:height 0.75))))
+ '(treemacs-root-face ((t (:height 0.85)))))
