@@ -14,7 +14,6 @@
    (interactive)
    (if (and (buffer-file-name) (buffer-modified-p))
        (save-buffer args)))
-
 (add-hook 'auto-save-hook 'save-buffer-if-visiting-file)
 (setq auto-save-interval 1)
 
@@ -24,6 +23,31 @@
   :config
   (load-theme 'leuven t)
   )
+
+;; Switch between Emacs windows
+(use-package ace-window
+  :ensure t
+  :config
+  (global-set-key (kbd "M-o") 'ace-window))
+
+;; Switch to treemacs
+(defvar previous-window nil
+  "Variable to store the previous window.")
+
+(defun switch-to-treemacs ()
+  "Switch to the Treemacs window."
+  (interactive)
+  (if (eq (selected-window) (treemacs-get-local-window))
+      (when previous-window
+        (select-window previous-window)
+        (setq previous-window nil))
+    (progn
+      (setq previous-window (selected-window))
+      (let ((treemacs-win (treemacs-get-local-window)))
+        (when treemacs-win
+          (select-window treemacs-win))))))
+
+(global-set-key (kbd "M-t") 'switch-to-treemacs)
 
 ;; Bind the function to the key sequence "<S-f1>"
 (global-set-key (kbd "<S-f1>")
@@ -158,9 +182,9 @@
 
   ;; Customize the sizes for Treemacs faces
   (custom-set-faces
-   '(treemacs-directory-face ((t (:height 0.85))))
-   '(treemacs-file-face ((t (:height 0.75))))
-   '(treemacs-root-face ((t (:height 0.85)))))
+   '(treemacs-directory-face ((t (:height 0.90))))
+   '(treemacs-file-face ((t (:height 0.80))))
+   '(treemacs-root-face ((t (:height 0.90)))))
   )
 
 (use-package treemacs-evil
@@ -226,6 +250,7 @@
  '(menu-bar-mode nil)
  '(package-selected-packages
    '(company use-package treemacs-all-the-icons lsp-ui lsp-haskell flycheck dracula-theme))
+ '(scroll-bar-mode nil)
  '(tool-bar-mode nil)
  '(warning-suppress-types '((comp) (comp))))
 (custom-set-faces
@@ -233,6 +258,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(treemacs-directory-face ((t (:height 0.85))))
- '(treemacs-file-face ((t (:height 0.75))))
- '(treemacs-root-face ((t (:height 0.85)))))
+ '(treemacs-directory-face ((t (:height 0.9))))
+ '(treemacs-file-face ((t (:height 0.8))))
+ '(treemacs-root-face ((t (:height 0.9)))))
